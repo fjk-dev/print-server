@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MXW01 Web Terminal — печать чеков через Web Bluetooth</title>
+    <meta name="description" content="Универсальный терминал для термопринтеров MXW01, Lefuxin, ESC/POS. Работает прямо в браузере.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+</head>
+<body>
+<div class="app-container">
+    <header class="app-header">
+        <div class="logo">
+            <h1>MXW01 <span>Web Terminal</span></h1>
+            <div class="lang-switch">
+            </div>
+        </div>
+    </header>
+
+    <main class="main-grid">
+        <!-- Левая колонка: редактор -->
+        <div class="card editor-card">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="markdown">Markdown</button>
+                <button class="tab-btn" data-tab="visual">Графика</button>
+            </div>
+
+            <div id="markdown-tab" class="tab-content">
+                <textarea id="textInput" placeholder="Введите текст в формате Markdown..."></textarea>
+                <div class="editor-hint">[QR:текст] – QR-код, [IMG:id] – изображение, [C] – по центру, # – заголовок</div>
+            </div>
+
+            <div id="visual-tab" class="tab-content hidden">
+                <div class="import-bar">
+                    <button id="uploadBtn">📁 Загрузить файл</button>
+                    <button id="urlBtn">🔗 По ссылке</button>
+                    <span class="hint">или вставьте из буфера (Ctrl+V)</span>
+                </div>
+                <div id="dropZone" class="gallery-grid">
+                    <!-- динамические миниатюры -->
+                </div>
+            </div>
+
+            <!-- Панель управления выбранным изображением -->
+            <div id="imgControls" class="image-controls hidden">
+                <div class="ctrl-row">
+                    <label><input type="checkbox" id="imgMode"> В потоке</label>
+                </div>
+                <div class="ctrl-row">
+                    <label>Масштаб <span id="scaleVal">1.0</span></label>
+                    <input type="range" id="imgScale" min="0.2" max="2.5" step="0.05" value="1">
+                </div>
+                <div class="ctrl-row">
+                    <label>Поворот <span id="rotateVal">0°</span></label>
+                    <input type="range" id="imgRotate" min="0" max="360" step="15" value="0">
+                </div>
+                <div class="ctrl-row">
+                    <label>Смещение X <span id="offsetXVal">0</span></label>
+                    <input type="range" id="imgOffsetX" min="-150" max="150" step="5" value="0">
+                </div>
+            </div>
+        </div>
+
+        <!-- Средняя колонка: превью и печать -->
+        <div class="card preview-card">
+            <div class="preview-header">
+                <span>Превью</span>
+                <button id="resetPreviewBtn" class="icon-btn">⟳</button>
+            </div>
+            <div class="canvas-wrapper">
+                <canvas id="mainCanvas"></canvas>
+            </div>
+            <div class="print-actions">
+                <button id="printBtn" class="btn primary" disabled>Печать (Web Bluetooth)</button>
+            </div>
+            <div id="printStatus" class="status-message"></div>
+        </div>
+
+        <!-- Правая колонка: настройки -->
+        <div class="card settings-card">
+            <h3>Принтер</h3>
+            <div class="setting-group">
+                <select id="driverSelect"></select>
+                <button id="connectBtn" class="btn secondary">Подключить</button>
+            </div>
+            <div id="status" class="status-badge">● Не подключён</div>
+
+            <h3>Параметры текста</h3>
+            <div class="setting-group">
+                <label>Шрифт</label>
+                <select id="fontFamily">
+                    <option value="Arial">Arial</option>
+                    <option value="'Courier New', monospace">Courier New</option>
+                    <option value="'Roboto Mono', monospace">Roboto Mono</option>
+                </select>
+            </div>
+            <div class="setting-group">
+                <label>Размер: <span id="fontSizeVal">20</span>px</label>
+                <input type="range" id="fontSize" min="12" max="64" value="20">
+            </div>
+            <div class="setting-group">
+                <label>Отступ X: <span id="offsetXValParam">0</span>px</label>
+                <input type="range" id="offsetX" min="0" max="60" value="0">
+            </div>
+            <div class="setting-group">
+                <label>Интервал: <span id="lineSpacingVal">1.0</span></label>
+                <input type="range" id="lineSpacing" min="0.8" max="2.0" step="0.05" value="1.0">
+            </div>
+    </main>
+
+    <footer class="footer-note">
+        Работает через Web Bluetooth в Chrome, Edge, Opera. Для iOS используйте браузер Bluefy.
+    </footer>
+</div>
+
+<script src="driver.js"></script>
+<script src="imagemanager.js"></script>
+<script src="renderer.js"></script>
+<script src="app.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => App.init());
+</script>
+</body>
+</html>
