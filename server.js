@@ -5,10 +5,8 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 const PORT = 3000;
 
-// Раздача статических файлов (index.html, style.css, *.js)
 app.use(express.static(path.join(__dirname)));
 
-// Прокси для загрузки изображений по URL (замена loadimg.php)
 app.get('/loadimg', async (req, res) => {
     const imageUrl = req.query.url;
     if (!imageUrl) {
