@@ -15,7 +15,6 @@ const Renderer = {
 
         let imgObj = ImageManager.storage[storageId];
         
-        // Если это QR и его нет – генерируем асинхронно
         if (!imgObj && type === 'QR' && typeof QRCode !== 'undefined') {
             const qrCanvas = document.createElement('canvas');
             QRCode.toCanvas(qrCanvas, id, { width: 160, margin: 1 }, (err) => {
@@ -28,13 +27,10 @@ const Renderer = {
                     qrImg.src = qrCanvas.toDataURL('image/png');
                 }
             });
-            // Пока нет – рисуем placeholder (возвращаем высоту)
             return mode === 0 ? 175 : 0;
         }
         
-        // Если обычная картинка ещё не загружена – пробуем её запросить (если это не QR)
         if (!imgObj && type === 'IMG') {
-            // Пытаемся импортировать по id (если id похож на URL)
             if (id.startsWith('http')) {
                 ImageManager.importImage(id, id).then(() => {
                     if (typeof App !== 'undefined') App.updatePreview();
@@ -117,7 +113,7 @@ const Renderer = {
                     currentY += 10;
                     continue;
                 }
-                // Текст
+                
                 let isCentered = clean.includes('[C]');
                 let font = clean.includes('[M]') ? "'Roboto Mono', monospace" : fontFamily;
                 let sizeMult = 1, isBold = false, indent = 0, bullet = null;
