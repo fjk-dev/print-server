@@ -20,18 +20,18 @@
 ## Установка и запуск
 
 ### 1. Клонируйте репозиторий
-  git clone https://github.com/yourusername/mxw01-web-terminal.git
-  cd mxw01-web-terminal
+  `git clone https://github.com/yourusername/mxw01-web-terminal.git`
+  `cd mxw01-web-terminal`
 
 ### 2. Установите зависимости сервера
-  npm init -y
-  npm install express http-proxy-middleware
+  `npm init -y`
+  `npm install express http-proxy-middleware`
 
 ### 3. Запустите сервер
-  node server.js
+  `node server.js`
 
 ### 4. Откройте в браузере
-  http://localhost:3000
+  `http://localhost:3000`
 
 > Сервер нужен для удобной разработки и работы загрузки изображений по URL (прокси для обхода CORS).
 > Можно открывать index.html напрямую, но тогда изображения по URL будут работать только при наличии loadimg.php.
@@ -62,7 +62,7 @@
 - После подключения принтера нажмите ПЕЧАТЬ.
 
 ## Структура проекта
-  /
+  `/
   ├── index.html          # Главная страница
   ├── style.css           # Стили
   ├── driver.js           # Драйверы принтеров (Lefuxin, ESC/POS)
@@ -70,7 +70,7 @@
   ├── renderer.js         # Отрисовка превью (Markdown, изображения)
   ├── imagemanager.js     # Загрузка изображений, дизеринг, настройки
   ├── server.js           # Локальный сервер (Express)
-  └── README.md
+  └── README.md`
 
 ## Технические детали
 - Ширина печати: 384 пикселя (стандарт для 58-мм термопринтеров).
