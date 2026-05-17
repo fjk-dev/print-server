@@ -9,20 +9,15 @@ const App = {
         this.updatePreview();
         this.canvas = document.getElementById('mainCanvas');
         
-        // Обработка кликов на canvas
         this.canvas.addEventListener('click', (e) => this.onCanvasClick(e));
-        // Перетаскивание
         this.canvas.addEventListener('mousedown', (e) => this.onDragStart(e));
         window.addEventListener('mousemove', (e) => this.onDragMove(e));
         window.addEventListener('mouseup', () => this.onDragEnd());
-        // Вставка из буфера
         document.addEventListener('paste', (e) => this.handlePaste(e));
         
-        // Следим за изменениями текста
         const textarea = document.getElementById('textInput');
         textarea.addEventListener('input', () => this.updatePreview());
         
-        // Загрузка файлов
         const fileInput = document.createElement('input');
         fileInput.type = 'file';
         fileInput.accept = 'image/*';
@@ -47,22 +42,17 @@ const App = {
             }
         };
         
-        // Кнопка печати
         document.getElementById('printBtn').onclick = () => this.printViaWebBT();
-        // Сброс превью
         document.getElementById('resetPreviewBtn').onclick = () => this.updatePreview();
-        // Применение настроек изображения (ползунки)
         document.getElementById('imgMode').onchange = () => this.applyImgChanges();
         document.getElementById('imgScale').oninput = () => this.applyImgChanges();
         document.getElementById('imgRotate').oninput = () => this.applyImgChanges();
         document.getElementById('imgOffsetX').oninput = () => this.applyImgChanges();
-        // Синхронизация слайдеров текста
         document.getElementById('fontSize').oninput = () => this.updatePreview();
         document.getElementById('offsetX').oninput = () => this.updatePreview();
         document.getElementById('lineSpacing').oninput = () => this.updatePreview();
         document.getElementById('fontFamily').onchange = () => this.updatePreview();
         
-        // --- НОВЫЕ ПОЛЗУНКИ НАСТРОЕК ИЗОБРАЖЕНИЯ ---
         const brightnessSlider = document.getElementById('brightness');
         const contrastSlider = document.getElementById('contrast');
         const methodSelect = document.getElementById('ditherMethod');
@@ -78,7 +68,6 @@ const App = {
             const method = methodSelect.value;
             document.getElementById('brightnessVal').innerText = brightness;
             document.getElementById('contrastVal').innerText = contrast;
-            // Переобрабатываем текущее изображение
             ImageManager.reprocessCurrentImage({ brightness, contrast, method });
         };
         
@@ -87,7 +76,6 @@ const App = {
         if (methodSelect) methodSelect.addEventListener('change', updateImageSettings);
         if (applyBtn) applyBtn.addEventListener('click', updateImageSettings);
         
-        // Переключение языка
         document.getElementById('sw-ru').onclick = () => this.setLanguage('ru');
         document.getElementById('sw-en').onclick = () => this.setLanguage('en');
         
@@ -115,7 +103,7 @@ const App = {
                 alert('Ошибка: ' + e.message);
             }
         };
-        // Переключение табов
+        
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.onclick = () => {
                 document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -223,9 +211,6 @@ const App = {
         }
         ImageManager.updateUI();
         this.updatePreview();
-        
-        // Обновить значения ползунков яркости/контраста для выбранного изображения (опционально)
-        // Они уже есть в интерфейсе, можно сбросить или оставить как есть
     },
 
     deselectImage() {
@@ -346,7 +331,6 @@ const App = {
     }
 };
 
-// Добавим метод поиска в ImageManager (если ещё не добавлен)
 ImageManager.findImageAt = function(mx, my) {
     const ids = Object.keys(Renderer.lastRenderedPositions);
     for (let i = ids.length-1; i >=0; i--) {
