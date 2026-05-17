@@ -19,7 +19,7 @@
 ## Установка и запуск
 
 ### 1. Клонируйте репозиторий
-  `git clone https://github.com/yourusername/mxw01-web-terminal.git`
+  `git clone https://github.com/fjk-dev/print-server.git`
   `cd mxw01-web-terminal`
 
 ### 2. Установите зависимости сервера
