@@ -94,7 +94,6 @@ const ImageManager = {
         let blob;
         if (source instanceof File || source instanceof Blob) blob = source;
         else {
-            // ИСПРАВЛЕНО: используем /loadimg вместо loadimg.php
             const proxyUrl = `/loadimg?url=${encodeURIComponent(source)}`;
             const res = await fetch(proxyUrl);
             if (!res.ok) throw new Error('Ошибка загрузки');
