@@ -1,4 +1,3 @@
-// Реальный драйвер MXW01 / Lefuxin (исправленная версия)
 class LefuxinDriver {
     constructor() {
         this.device = null;
@@ -70,7 +69,6 @@ class LefuxinDriver {
     }
 }
 
-// ESC/POS драйвер
 class ESCPOSDriver {
     constructor() {
         this.txChar = null;
@@ -107,7 +105,6 @@ class ESCPOSDriver {
     }
 }
 
-// Универсальный драйвер для автовыбора
 class UniversalPrinterDriver {
     constructor() {
         this.driver = null;
@@ -129,7 +126,6 @@ class UniversalPrinterDriver {
     }
 }
 
-// Реестр драйверов для выбора в интерфейсе
 const PrinterRegistry = {
     "mxw01": { name: "MXW01 / Lefuxin", driver: new LefuxinDriver() },
     "escpos": { name: "ESC/POS (экспериментально)", driver: new ESCPOSDriver() },
