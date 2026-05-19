@@ -20,7 +20,7 @@
 
 ### 1. Клонируйте репозиторий
   `git clone https://github.com/fjk-dev/print-server.git`
-  `cd mxw01-web-terminal`
+  `cd print-server`
 
 ### 2. Установите зависимости сервера
   `npm init -y`
